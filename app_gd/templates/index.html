@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>First Page</title>
+    <title>Страница</title>
+    <style>
+        a {
+            color:white
+           }
+        a:link
+        {
+            color:white
+        }
+        a:visited
+        {
+            color:white
+        }
+    </style>
 </head>
-<body>
-    <h1> {{text}} </h1>
+<body bgcolor="black">
+    <h1 style="color:white"> {{text}} </h1>
+    <a href="{{link}}">Переход</a>
+    <br>
+    <a href="{{link_home}}">Вернутся на главную</a>
 </body>
 </html>
