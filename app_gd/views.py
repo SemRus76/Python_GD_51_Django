@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse, JsonResponse
 from django.http.request import HttpRequest, HttpHeaders
+from app_gd.models import Fruit
+from django.db.models import QuerySet
 import json
 
 
@@ -43,4 +45,8 @@ def json_example(request: HttpRequest):
     response.status_code = 418
     return response
 
+def fruit(request: HttpRequest):
+    lst = list(Fruit.objects.all().values("title", "weight", "price"))
+    return JsonResponse(lst, safe=False,
+                        json_dumps_params={"ensure_ascii": False})
 

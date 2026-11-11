@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <title>Страница</title>
     <style>
-        a {
+        div
+        {
+            color: white;
+            border: solid 1px white;
+        }
+        a
+        {
             color:white
-           }
+        }
         a:link
         {
             color:white
@@ -19,8 +25,22 @@
 </head>
 <body bgcolor="black">
     <h1 style="color:white"> {{text}} </h1>
-    <a href="{{link}}">Переход</a>
+    {% if link %}
+        <a href="{{link}}">Переход</a>
+    {% endif %}
+
+    {% if link_home %}
     <br>
-    <a href="{{link_home}}">Вернутся на главную</a>
+        <a href="{{link_home}}">Переход</a>
+    {% endif %}
+
+    {% if list %}
+    <br>
+    {% for el in list %}
+        <div align="center">
+            {{el}}
+        </div>
+    {% endfor %}
+    {% endif %}
 </body>
 </html>
