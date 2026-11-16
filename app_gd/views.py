@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http.response import HttpResponse, JsonResponse
 from django.http.request import HttpRequest, HttpHeaders
 from app_gd.models import Fruit
+from app_gd.forms import FruitForm
 from django.db.models import QuerySet
 import json
 
@@ -47,6 +48,28 @@ def json_example(request: HttpRequest):
 
 def fruit(request: HttpRequest):
     lst = list(Fruit.objects.all().values("title", "weight", "price"))
-    return JsonResponse(lst, safe=False,
-                        json_dumps_params={"ensure_ascii": False})
+    form = FruitForm()
+    context = {
+        "text": "Это страница с фруктами",
+        "list" : lst,
+        "form" : form
+    }
+    return render(request, 'index.html', context)
+    # return JsonResponse(lst, safe=False,
+    #                     json_dumps_params={"ensure_ascii": False})
+
+def fruit_create(request : HttpRequest):
+    if request.method == 'POST':
+        req = FruitForm(request.POST)
+        if req.is_valid():
+            req.save()
+            return redirect(fruit)
+        else:
+            response = HttpResponse()
+            response.status_code = 422
+            return response
+    else:
+        response = HttpResponse()
+        response.status_code = 405
+        return response
 

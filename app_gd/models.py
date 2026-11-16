@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 # CREATE TABLE fruit
@@ -18,7 +20,7 @@ from django.db import models
 # Create your models here.
 
 class Fruit(models.Model):
-    id = models.UUIDField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.TextField(verbose_name="Название")
     weight = models.FloatField(verbose_name="Вес")
     price = models.IntegerField(verbose_name="Цена")

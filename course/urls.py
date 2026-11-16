@@ -7,5 +7,6 @@ urlpatterns = [
     path('first_page', views.first_page),
     path('second_page', views.second_page),
     path('json_example', views.json_example),
-    path('fruit', views.fruit)
+    path('fruit', views.fruit),
+    path('fruit/create', views.fruit_create),
 ]

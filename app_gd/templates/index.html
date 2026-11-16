@@ -41,6 +41,11 @@
             {{el}}
         </div>
     {% endfor %}
+    <br>
+    <form method="post" action="fruit/create">
+        {{ form }}
+        <input type="submit" value="Отправить">
+    </form>
     {% endif %}
 </body>
 </html>
