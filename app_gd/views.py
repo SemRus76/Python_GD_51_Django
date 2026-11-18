@@ -4,6 +4,7 @@ from django.http.request import HttpRequest, HttpHeaders
 from app_gd.models import Fruit
 from app_gd.forms import FruitForm
 from django.db.models import QuerySet
+from django.db.models import F
 import json
 
 
@@ -52,13 +53,14 @@ def fruit(request: HttpRequest):
     context = {
         "text": "Это страница с фруктами",
         "list" : lst,
-        "form" : form
+        "form_create" : form
     }
     return render(request, 'index.html', context)
     # return JsonResponse(lst, safe=False,
     #                     json_dumps_params={"ensure_ascii": False})
 
-def fruit_create(request : HttpRequest):
+
+def fruit_create(request: HttpRequest):
     if request.method == 'POST':
         req = FruitForm(request.POST)
         if req.is_valid():
@@ -73,3 +75,63 @@ def fruit_create(request : HttpRequest):
         response.status_code = 405
         return response
 
+
+def fruit_delete(request: HttpRequest):
+    if request.method == 'POST':
+        req = request.POST
+        name = req.get("title")
+        price = req.get("price")
+        if name:
+            bd_result: QuerySet = Fruit.objects.filter(title=name)
+            if bd_result.count() > 1:
+                if price:
+                    bd_result.filter(price=price).delete()
+                else:
+                    response = HttpResponse()
+                    response.status_code = 422
+                    return response
+            elif bd_result.count():
+                bd_result.delete()
+            return redirect(fruit)
+        else:
+            response = HttpResponse()
+            response.status_code = 422
+            return response
+    else:
+        response = HttpResponse()
+        response.status_code = 405
+        return response
+
+def fruit_patch(request: HttpRequest):
+    if request.method == 'POST':
+        req = request.POST
+        name = req.get("title_patch")
+        price = req.get("price_patch")
+        new_name = req.get("title_patch_change")
+        new_price = req.get("price_patch_change")
+        new_weight = req.get("weight_patch_change")
+        if name:
+            bd_result: QuerySet = Fruit.objects.filter(title=name)
+            if bd_result.count() > 1:
+                if price:
+                    obj = bd_result.filter(price=price)
+                    obj.update_or_create(title=new_name if new_name else F("title"),
+                                         price=new_price if new_price else F("price"),
+                                         weight=new_weight if new_weight else F("weight"))
+                else:
+                    response = HttpResponse()
+                    response.status_code = 422
+                    return response
+            elif bd_result.count():
+                bd_result.update_or_create(title=new_name if new_name else F("title"),
+                                           price=new_price if new_price else F("price"),
+                                           weight=new_weight if new_weight else F("weight"))
+            return redirect(fruit)
+        else:
+            response = HttpResponse()
+            response.status_code = 422
+            return response
+    else:
+        response = HttpResponse()
+        response.status_code = 405
+        return response

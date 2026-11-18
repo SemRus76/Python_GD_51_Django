@@ -9,4 +9,6 @@ urlpatterns = [
     path('json_example', views.json_example),
     path('fruit', views.fruit),
     path('fruit/create', views.fruit_create),
+    path('fruit/delete', views.fruit_delete),
+    path('fruit/patch', views.fruit_patch),
 ]

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Страница</title>
     <style>
+        h1
+        {
+            color: white;
+        }
         div
         {
             color: white;
@@ -42,9 +46,49 @@
         </div>
     {% endfor %}
     <br>
+    <h1>Форма создания</h1>
     <form method="post" action="fruit/create">
-        {{ form }}
+        {{ form_create }}
         <input type="submit" value="Отправить">
+    </form>
+    <br>
+    <h1>Форма удаления</h1>
+    <form method="post" action="fruit/delete">
+        <div>
+            <label for="title">Название: </label>
+            <input required type="text" name="title" id="title" placeholder="Введите название">
+        </div>
+        <div>
+            <label for="price">Цена: </label>
+            <input type="number" name="price" id="price" placeholder="Введите цену">
+        </div>
+        <input type="submit" value="УДАЛИТЬ">
+    </form>
+    <br>
+    <h1>Форма Изменения</h1>
+    <form method="post" action="fruit/patch">
+        <div>
+            <label for="title_patch">Название: </label>
+            <input required type="text" name="title_patch" id="title_patch" placeholder="Что изменить?">
+        </div>
+        <div>
+            <label for="price_patch">Цена: </label>
+            <input type="number" name="price_patch" id="price_patch" placeholder="Что изменить?">
+        </div>
+        <br>
+        <div>
+            <label for="title_patch_change">Название: </label>
+            <input type="text" name="title_patch_change" id="title_patch_change" placeholder="Как изменить?">
+        </div>
+        <div>
+            <label for="price_patch_change">Цена: </label>
+            <input type="number" name="price_patch_change" id="price_patch_change" placeholder="Как изменить?">
+        </div>
+        <div>
+            <label for="weight_patch_change">Вес: </label>
+            <input type="number" name="weight_patch_change" id="weight_patch_change" placeholder="Как изменить?">
+        </div>
+        <input type="submit" value="Изменить">
     </form>
     {% endif %}
 </body>

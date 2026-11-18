@@ -25,6 +25,7 @@ class Fruit(models.Model):
     weight = models.FloatField(verbose_name="Вес")
     price = models.IntegerField(verbose_name="Цена")
 
+
     def __str__(self):
         return self.title
 
